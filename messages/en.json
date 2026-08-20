@@ -1,0 +1,133 @@
+{
+  "meta": {
+    "title": "learn-sailing — Learn the parts of a boat",
+    "description": "An interactive 3D sailboat for learning hull, rig, and orientation terms."
+  },
+  "site": {
+    "name": "learn-sailing",
+    "tagline": "Learn the parts of a sailboat",
+    "github": "Source on GitHub",
+    "hullType": "Monohull · sloop · single rudder"
+  },
+  "locale": {
+    "de": "Deutsch",
+    "en": "English",
+    "switchTo": "Switch language"
+  },
+  "filters": {
+    "all": "Whole boat",
+    "hull": "Hull",
+    "rig": "Rig",
+    "standing-rig": "Standing rigging",
+    "running-rig": "Running rigging",
+    "mast": "Mast",
+    "boom": "Boom",
+    "aft": "Aft"
+  },
+  "search": {
+    "placeholder": "Search for a part…",
+    "empty": "No part matches that search."
+  },
+  "detail": {
+    "hint": "Click a point on the boat or pick a part from the list.",
+    "selected": "Selected"
+  },
+  "viewer": {
+    "reset": "Reset view",
+    "loading": "Loading boat…",
+    "orientation": "Direction"
+  },
+  "attribution": {
+    "model": "3D model: Kenney (CC0)"
+  },
+  "parts": {
+    "hull": {
+      "name": "Hull",
+      "description": "The hull is the watertight body of the boat. This first model is a monohull: one hull, not a catamaran."
+    },
+    "keel": {
+      "name": "Keel",
+      "description": "The keel sits under the hull. It provides sideways resistance in the water and counters heeling."
+    },
+    "deck": {
+      "name": "Deck",
+      "description": "The deck is the walking surface on top of the hull. From here you handle halyards, sheets, and the helm."
+    },
+    "cockpit": {
+      "name": "Cockpit",
+      "description": "The crew sits in the cockpit aft. Steering and most running rigging are handled from here."
+    },
+    "rudder": {
+      "name": "Rudder",
+      "description": "The rudder sits at the stern in the water. This boat has a single rudder, not a twin-rudder setup."
+    },
+    "tiller": {
+      "name": "Tiller",
+      "description": "The tiller is the lever that turns the rudder. Larger yachts often use a wheel instead."
+    },
+    "mast": {
+      "name": "Mast",
+      "description": "The mast stands vertically and carries the sails and standing rigging. A sloop has exactly one mast."
+    },
+    "spreaders": {
+      "name": "Spreaders",
+      "description": "Spreaders are cross-arms on the mast. They hold the shrouds out so the mast is better supported sideways."
+    },
+    "boom": {
+      "name": "Boom",
+      "description": "The boom is the horizontal spar at the foot of the mainsail. It holds the sail’s lower edge and is trimmed with the mainsheet."
+    },
+    "mainsail": {
+      "name": "Mainsail",
+      "description": "The mainsail sits behind the mast, between mast and boom. It is the sloop’s primary sail."
+    },
+    "jib": {
+      "name": "Jib",
+      "description": "The jib is the headsail in front of the mast. It runs on the forestay and is trimmed with the jib sheets."
+    },
+    "forestay": {
+      "name": "Forestay",
+      "description": "The forestay is the stay from the masthead to the bow. It supports the mast forward and carries the jib."
+    },
+    "backstay": {
+      "name": "Backstay",
+      "description": "The backstay runs from the masthead to the stern. It supports the mast aft and is part of the standing rigging."
+    },
+    "shrouds": {
+      "name": "Shrouds",
+      "description": "The shrouds support the mast to starboard and port. Together with forestay and backstay they make up the standing rigging."
+    },
+    "mainHalyard": {
+      "name": "Main halyard",
+      "description": "The main halyard hoists the mainsail up the mast. Halyards are running rigging: you handle them often."
+    },
+    "jibHalyard": {
+      "name": "Jib halyard",
+      "description": "The jib halyard hoists the jib. It runs to the masthead and is made off on the foredeck or in the cockpit."
+    },
+    "mainsheet": {
+      "name": "Mainsheet",
+      "description": "The mainsheet trims the boom and therefore the mainsail. Sheeting in flattens the sail and brings it closer to the wind."
+    },
+    "jibSheet": {
+      "name": "Jib sheet",
+      "description": "The jib sheets run from the jib clew aft. On each tack you sheet in the leeward sheet."
+    },
+    "starboard": {
+      "name": "Starboard",
+      "description": "Starboard is the right-hand side when you look forward toward the bow. At night starboard carries a green light."
+    },
+    "port": {
+      "name": "Port",
+      "description": "Port is the left-hand side when you look forward toward the bow. At night port carries a red light."
+    },
+    "bow": {
+      "name": "Bow",
+      "description": "The bow is the forward end of the boat. Toward the bow is ahead; the forestay and anchor live here."
+    },
+    "stern": {
+      "name": "Stern",
+      "description": "The stern is the aft end of the boat. Toward the stern is aft; the rudder and often the cockpit sit here."
+    }
+  }
+}
