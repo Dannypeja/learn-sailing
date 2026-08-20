@@ -12,36 +12,41 @@ export function SiteHeader() {
   const currentLocale = useLocale();
 
   return (
-    <header className="flex items-center justify-between gap-4 border-b border-white/10 bg-[var(--navy-deep)]/90 px-4 py-3 backdrop-blur md:px-6">
+    <header className="flex items-center justify-between gap-4 border-b border-[var(--line)] bg-[var(--studio)] px-4 py-3 md:px-6">
       <div className="min-w-0">
-        <p className="truncate text-sm font-semibold tracking-wide text-[var(--foam)]">
+        <p className="truncate font-mono text-[11px] tracking-[0.22em] text-[var(--text)] uppercase">
           {t("site.name")}
         </p>
-        <p className="truncate text-xs text-[var(--foam)]/70">{t("site.tagline")}</p>
+        <p className="truncate text-xs text-[var(--muted)]">{t("site.tagline")}</p>
       </div>
-      <div className="flex items-center gap-2 sm:gap-3">
+      <div className="flex items-center gap-4">
         <div
-          className="flex rounded-full border border-white/15 bg-white/5 p-0.5"
+          className="flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] uppercase"
           role="group"
           aria-label={t("locale.switchTo")}
         >
-          {routing.locales.map((locale) => (
-            <Link
-              key={locale}
-              href={pathname}
-              locale={locale}
-              data-active={locale === currentLocale}
-              className="rounded-full px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-[var(--foam)]/70 transition hover:text-[var(--foam)] data-[active=true]:bg-[var(--accent)] data-[active=true]:text-[var(--navy-deep)]"
-            >
-              {locale}
-            </Link>
+          {routing.locales.map((locale, index) => (
+            <span key={locale} className="flex items-center gap-2">
+              {index > 0 ? <span className="text-[var(--line)]">/</span> : null}
+              <Link
+                href={pathname}
+                locale={locale}
+                className={
+                  locale === currentLocale
+                    ? "text-[var(--accent)]"
+                    : "text-[var(--muted)] transition hover:text-[var(--text)]"
+                }
+              >
+                {locale}
+              </Link>
+            </span>
           ))}
         </div>
         <a
           href={GITHUB_URL}
           target="_blank"
           rel="noreferrer"
-          className="hidden rounded-full border border-white/15 px-3 py-1 text-xs text-[var(--foam)]/80 transition hover:border-white/40 hover:text-[var(--foam)] sm:inline"
+          className="hidden text-[11px] tracking-[0.08em] text-[var(--muted)] transition hover:text-[var(--text)] sm:inline"
         >
           {t("site.github")}
         </a>

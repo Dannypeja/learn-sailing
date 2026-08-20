@@ -7,4 +7,4 @@
 - Author: [Kenney](https://www.kenney.nl)
 - License: [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)
 
-Educational hotspots, camera poses, and extra rigging lines are defined in `content/boats/monohull-sloop-single-rudder/parts.json` and are not part of the original mesh.
+Educational hotspots, camera poses, extra rigging lines, and a gelcoat/CAD material treatment are defined in the app (`content/boats/` and the viewer) and are not part of the original Kenney mesh.

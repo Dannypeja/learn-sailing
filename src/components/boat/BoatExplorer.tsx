@@ -45,7 +45,7 @@ export function BoatExplorer({ boat }: Props) {
   }
 
   return (
-    <div className="flex min-h-dvh flex-col bg-[var(--navy-deep)] text-[var(--foam)]">
+    <div className="flex min-h-dvh flex-col bg-[var(--studio)] text-[var(--text)]">
       <SiteHeader />
       <div className="flex min-h-0 flex-1 flex-col md:flex-row">
         <PartsPanel
@@ -75,11 +75,11 @@ export function BoatExplorer({ boat }: Props) {
                 setSelectedId(null);
                 setResetToken((value) => value + 1);
               }}
-              className="rounded-full border border-white/15 bg-[var(--navy-deep)]/75 px-3 py-1.5 text-xs font-medium text-[var(--foam)] backdrop-blur transition hover:border-white/40"
+              className="border border-[var(--line)] bg-[var(--studio)]/80 px-3 py-1.5 font-mono text-[10px] tracking-[0.14em] text-[var(--text)] uppercase backdrop-blur-sm transition hover:border-[var(--accent)]"
             >
               {t("viewer.reset")}
             </button>
-            <p className="rounded-full bg-[var(--navy-deep)]/55 px-2.5 py-1 text-[10px] text-[var(--foam)]/70 backdrop-blur">
+            <p className="font-mono text-[9px] tracking-[0.12em] text-[var(--muted)] uppercase">
               {t("attribution.model")}
             </p>
           </div>
@@ -93,7 +93,7 @@ export function BoatExplorer({ boat }: Props) {
 function ViewerFallback() {
   const t = useTranslations();
   return (
-    <div className="flex h-full min-h-[48vh] items-center justify-center bg-[var(--navy-deep)] text-sm text-[var(--foam)]/70">
+    <div className="flex h-full min-h-[48vh] items-center justify-center bg-[var(--studio)] font-mono text-[11px] tracking-[0.16em] text-[var(--muted)] uppercase">
       {t("viewer.loading")}
     </div>
   );

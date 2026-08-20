@@ -14,21 +14,21 @@ export function PartDetail({ part }: Props) {
 
   return (
     <section className="pointer-events-none absolute inset-x-0 bottom-0 p-3 md:p-4">
-      <div className="pointer-events-auto max-w-xl rounded-2xl border border-white/10 bg-[var(--navy-deep)]/85 px-4 py-3 shadow-xl backdrop-blur">
+      <div className="pointer-events-auto max-w-xl border border-[var(--line)] bg-[var(--studio)]/88 px-4 py-3 backdrop-blur-sm">
         {part ? (
           <>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--sand)]">
+            <p className="font-mono text-[10px] tracking-[0.2em] text-[var(--muted)] uppercase">
               {t("detail.selected")}
             </p>
-            <h2 className="mt-1 text-xl font-semibold text-[var(--foam)]">
+            <h2 className="mt-1 text-lg font-medium tracking-tight text-[var(--text)]">
               {partName(tParts, part.id)}
             </h2>
-            <p className="mt-1 text-sm leading-relaxed text-[var(--foam)]/80">
+            <p className="mt-1 text-sm leading-relaxed text-[var(--muted)]">
               {partDescription(tParts, part.id)}
             </p>
           </>
         ) : (
-          <p className="text-sm text-[var(--foam)]/75">{t("detail.hint")}</p>
+          <p className="text-sm text-[var(--muted)]">{t("detail.hint")}</p>
         )}
       </div>
     </section>

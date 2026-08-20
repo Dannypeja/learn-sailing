@@ -48,12 +48,12 @@ export function PartsPanel({
   }, [boat.parts, filter, query, tParts]);
 
   return (
-    <aside className="flex h-[42vh] min-h-0 w-full shrink-0 flex-col border-t border-white/10 bg-[var(--navy-soft)] md:h-auto md:w-80 md:border-r md:border-t-0">
-      <div className="border-b border-white/10 px-4 py-3">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--sand)]">
+    <aside className="flex h-[42vh] min-h-0 w-full shrink-0 flex-col border-t border-[var(--line)] bg-[var(--panel)] md:h-auto md:w-80 md:border-t-0 md:border-r">
+      <div className="border-b border-[var(--line)] px-4 py-4">
+        <p className="font-mono text-[10px] tracking-[0.2em] text-[var(--muted)] uppercase">
           {t("site.hullType")}
         </p>
-        <div className="mt-3 flex flex-wrap gap-1.5">
+        <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2">
           {FILTER_IDS.map((id) => {
             const active = id === filter;
             return (
@@ -61,10 +61,10 @@ export function PartsPanel({
                 key={id}
                 type="button"
                 onClick={() => onFilterChange(id)}
-                className={`rounded-full px-2.5 py-1 text-xs font-medium transition ${
+                className={`border-b pb-1 text-[11px] tracking-[0.12em] uppercase transition ${
                   active
-                    ? "bg-[var(--accent)] text-[var(--navy-deep)]"
-                    : "bg-white/8 text-[var(--foam)]/80 hover:bg-white/14"
+                    ? "border-[var(--accent)] text-[var(--text)]"
+                    : "border-transparent text-[var(--muted)] hover:text-[var(--text)]"
                 }`}
               >
                 {tFilters(id)}
@@ -72,19 +72,19 @@ export function PartsPanel({
             );
           })}
         </div>
-        <label className="mt-3 block">
+        <label className="mt-4 block">
           <span className="sr-only">{t("search.placeholder")}</span>
           <input
             value={query}
             onChange={(event) => onQueryChange(event.target.value)}
             placeholder={t("search.placeholder")}
-            className="w-full rounded-lg border border-white/10 bg-[var(--navy-deep)] px-3 py-2 text-sm text-[var(--foam)] outline-none placeholder:text-[var(--foam)]/40 focus:border-[var(--accent)]"
+            className="w-full border border-[var(--line)] bg-[var(--studio)] px-3 py-2 text-sm text-[var(--text)] outline-none placeholder:text-[var(--muted)]/70 focus:border-[var(--accent)]"
           />
         </label>
       </div>
-      <ul className="min-h-0 flex-1 overflow-y-auto p-2">
+      <ul className="min-h-0 flex-1 overflow-y-auto py-1">
         {visibleParts.length === 0 ? (
-          <li className="px-3 py-6 text-sm text-[var(--foam)]/60">
+          <li className="px-4 py-6 text-sm text-[var(--muted)]">
             {t("search.empty")}
           </li>
         ) : (
@@ -95,15 +95,15 @@ export function PartsPanel({
                 <button
                   type="button"
                   onClick={() => onSelect(part.id)}
-                  className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm transition ${
+                  className={`flex w-full items-center justify-between border-l-2 px-4 py-2 text-left text-sm transition ${
                     selected
-                      ? "bg-[var(--accent)]/20 text-[var(--foam)]"
-                      : "text-[var(--foam)]/85 hover:bg-white/8"
+                      ? "border-[var(--accent)] bg-white/4 text-[var(--text)]"
+                      : "border-transparent text-[var(--text)]/80 hover:bg-white/3 hover:text-[var(--text)]"
                   }`}
                 >
                   <span>{partName(tParts, part.id)}</span>
                   {selected ? (
-                    <span className="text-[10px] uppercase tracking-wide text-[var(--accent)]">
+                    <span className="font-mono text-[9px] tracking-[0.16em] text-[var(--accent)] uppercase">
                       {t("detail.selected")}
                     </span>
                   ) : null}

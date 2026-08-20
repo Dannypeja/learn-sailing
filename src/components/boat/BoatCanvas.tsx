@@ -1,6 +1,15 @@
 "use client";
 
-import { Html, Line, ContactShadows, CameraControls, useGLTF, useCursor } from "@react-three/drei";
+import {
+  CameraControls,
+  ContactShadows,
+  Environment,
+  Grid,
+  Html,
+  Line,
+  useCursor,
+  useGLTF,
+} from "@react-three/drei";
 import { Canvas, useThree } from "@react-three/fiber";
 import {
   Suspense,
@@ -11,7 +20,12 @@ import {
   useState,
 } from "react";
 import * as THREE from "three";
-import { partMatchesFilter, type BoatDefinition, type BoatPart, type FilterId } from "@/lib/boats";
+import {
+  partMatchesFilter,
+  type BoatDefinition,
+  type BoatPart,
+  type FilterId,
+} from "@/lib/boats";
 
 type Labels = Record<string, string>;
 
@@ -25,26 +39,38 @@ type CanvasProps = {
 };
 
 const ORIENTATION_IDS = new Set(["bow", "stern", "port", "starboard"]);
+const STUDIO_BG = "#07090c";
+const RIG_FILTERS = new Set([
+  "rig",
+  "mast",
+  "boom",
+  "standing-rig",
+  "running-rig",
+]);
 
 export function BoatCanvas(props: CanvasProps) {
   return (
     <Canvas
       camera={{
         position: props.boat.defaultCamera.position,
-        fov: 42,
+        fov: 38,
         near: 0.1,
         far: 80,
       }}
       dpr={[1, 2]}
-      gl={{ antialias: true }}
+      gl={{
+        antialias: true,
+        toneMapping: THREE.ACESFilmicToneMapping,
+        toneMappingExposure: 1.05,
+      }}
       onPointerMissed={() => props.onSelect(null)}
     >
-      <color attach="background" args={["#0b1f33"]} />
-      <fog attach="fog" args={["#0b1f33", 12, 28]} />
-      <hemisphereLight args={["#cfe7f5", "#163044", 0.9]} />
-      <directionalLight position={[6, 8, 4]} intensity={1.35} color="#fff4e5" />
-      <directionalLight position={[-4, 3, -6]} intensity={0.35} color="#7fb7d4" />
+      <color attach="background" args={[STUDIO_BG]} />
+      <hemisphereLight args={["#9aa7b5", "#0b0e12", 0.35]} />
+      <directionalLight position={[5.5, 7, 3.5]} intensity={1.05} color="#f4f7fb" />
+      <directionalLight position={[-5, 2.5, -4]} intensity={0.28} color="#7f93a8" />
       <Suspense fallback={null}>
+        <Environment preset="city" environmentIntensity={0.38} />
         <BoatScene {...props} />
       </Suspense>
     </Canvas>
@@ -111,17 +137,27 @@ function BoatScene({
         labels={labels}
         onSelect={onSelect}
       />
-      <ContactShadows
-        position={[0, 0.01, 0]}
-        opacity={0.35}
-        scale={12}
-        blur={2.4}
-        far={8}
+      <Grid
+        position={[0, -0.001, 0]}
+        args={[24, 24]}
+        cellSize={0.5}
+        cellThickness={0.4}
+        cellColor="#1b222c"
+        sectionSize={2.5}
+        sectionThickness={0.9}
+        sectionColor="#2c3644"
+        fadeDistance={16}
+        fadeStrength={1.15}
+        infiniteGrid
       />
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
-        <circleGeometry args={[7.5, 64]} />
-        <meshStandardMaterial color="#12324a" roughness={0.95} metalness={0.05} />
-      </mesh>
+      <ContactShadows
+        position={[0, 0.002, 0]}
+        opacity={0.42}
+        scale={14}
+        blur={2.8}
+        far={9}
+        color="#000000"
+      />
     </>
   );
 }
@@ -143,9 +179,18 @@ function BoatModel({
       if (!mesh.isMesh) {
         return;
       }
-      mesh.material = Array.isArray(mesh.material)
-        ? mesh.material.map((material) => material.clone())
-        : mesh.material.clone();
+      const isSail = mesh.name.toLowerCase().includes("sail");
+      mesh.material = new THREE.MeshPhysicalMaterial({
+        color: isSail ? "#d5dee6" : "#f2f4f6",
+        metalness: isSail ? 0.06 : 0.16,
+        roughness: isSail ? 0.4 : 0.22,
+        clearcoat: isSail ? 0.08 : 0.82,
+        clearcoatRoughness: 0.2,
+        transparent: true,
+        opacity: isSail ? 0.84 : 1,
+        envMapIntensity: 1.05,
+        side: isSail ? THREE.DoubleSide : THREE.FrontSide,
+      });
     });
     return next;
   }, [scene]);
@@ -161,25 +206,23 @@ function BoatModel({
       const materials = Array.isArray(mesh.material)
         ? mesh.material
         : [mesh.material];
-      const isSail = mesh.name === "sail";
-      const highlighted = Boolean(
-        selectedPart?.meshNames?.includes(mesh.name),
-      );
+      const isSail = mesh.name.toLowerCase().includes("sail");
+      const highlighted = Boolean(selectedPart?.meshNames?.includes(mesh.name));
       const dimmed =
         filter !== "all" &&
-        ((isSail && !["rig", "mast", "boom", "standing-rig", "running-rig"].includes(filter)) ||
+        ((isSail && !RIG_FILTERS.has(filter)) ||
           (!isSail && filter !== "hull" && filter !== "aft"));
 
       for (const material of materials) {
-        const std = material as THREE.MeshStandardMaterial;
+        const std = material as THREE.MeshPhysicalMaterial;
         if (!("opacity" in std)) {
           continue;
         }
         std.transparent = true;
-        std.opacity = dimmed ? 0.28 : 1;
+        std.opacity = dimmed ? 0.16 : isSail ? 0.84 : 1;
         if ("emissive" in std) {
-          std.emissive = new THREE.Color(highlighted ? "#2ea3c4" : "#000000");
-          std.emissiveIntensity = highlighted ? 0.35 : 0;
+          std.emissive = new THREE.Color(highlighted ? "#1b6f7c" : "#000000");
+          std.emissiveIntensity = highlighted ? 0.18 : 0;
         }
       }
     });
@@ -216,10 +259,10 @@ function RigLines({
             <Line
               key={`${part.id}-${index}`}
               points={points}
-              color={selected ? "#7ee0f2" : "#d7ecf4"}
-              lineWidth={selected ? 2.4 : 1.4}
+              color={selected ? "#67e8f9" : "#6b7785"}
+              lineWidth={selected ? 1.35 : 0.85}
               transparent
-              opacity={selected ? 0.95 : 0.45}
+              opacity={selected ? 0.8 : 0.4}
             />
           );
         }),
@@ -249,41 +292,32 @@ function Hotspots({
       {parts.map((part) => {
         const active = partMatchesFilter(part, filter);
         const selected = part.id === selectedId;
+        if (!active && !selected) {
+          return null;
+        }
         const isOrientation = ORIENTATION_IDS.has(part.id);
-        const showCompass = isOrientation;
+        const showLabel = selected || hovered === part.id;
         return (
           <group key={part.id} position={part.position}>
-            <HotspotMesh
+            <HotspotCollider
               radius={part.radius}
-              active={active}
-              selected={selected}
               onSelect={() => onSelect(part.id)}
               onHover={(value) => setHovered(value ? part.id : null)}
             />
-            {(selected || hovered === part.id) && (
-              <Html
-                center
-                distanceFactor={8}
-                position={[0, part.radius + 0.18, 0]}
-                style={{ pointerEvents: "none" }}
-              >
-                <div className="rounded-full bg-[var(--navy-deep)]/90 px-2.5 py-1 text-xs font-semibold whitespace-nowrap text-[var(--foam)] shadow-lg">
-                  {labels[part.id]}
-                </div>
+            <Html center style={{ pointerEvents: "none" }} zIndexRange={[20, 0]}>
+              <div
+                className={`hotspot-pin${showLabel ? " is-hovered" : ""}${selected ? " is-selected" : ""}`}
+              />
+            </Html>
+            {showLabel ? (
+              <Html center style={{ pointerEvents: "none" }} zIndexRange={[40, 10]}>
+                <div className="hotspot-label">{labels[part.id]}</div>
               </Html>
-            )}
-            {showCompass && !selected && hovered !== part.id && (
-              <Html
-                center
-                distanceFactor={10}
-                position={[0, 0.22, 0]}
-                style={{ pointerEvents: "none", opacity: 0.85 }}
-              >
-                <div className="rounded-full border border-white/15 bg-[var(--navy-deep)]/55 px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase text-[var(--sand)]">
-                  {labels[part.id]}
-                </div>
+            ) : isOrientation ? (
+              <Html center style={{ pointerEvents: "none" }} zIndexRange={[15, 0]}>
+                <div className="orientation-cap">{labels[part.id]}</div>
               </Html>
-            )}
+            ) : null}
           </group>
         );
       })}
@@ -291,16 +325,12 @@ function Hotspots({
   );
 }
 
-function HotspotMesh({
+function HotspotCollider({
   radius,
-  active,
-  selected,
   onSelect,
   onHover,
 }: {
   radius: number;
-  active: boolean;
-  selected: boolean;
   onSelect: () => void;
   onHover: (hovered: boolean) => void;
 }) {
@@ -318,17 +348,8 @@ function HotspotMesh({
       }}
       onPointerOut={() => onHover(false)}
     >
-      <sphereGeometry args={[selected ? radius * 1.15 : radius, 20, 20]} />
-      <meshStandardMaterial
-        color={selected ? "#2ea3c4" : "#f4efe6"}
-        emissive={selected ? "#2ea3c4" : "#8fb7c8"}
-        emissiveIntensity={selected ? 0.55 : 0.12}
-        transparent
-        opacity={active ? 0.62 : 0.12}
-        roughness={0.35}
-        metalness={0.05}
-        depthWrite={false}
-      />
+      <sphereGeometry args={[Math.max(radius, 0.12), 16, 16]} />
+      <meshBasicMaterial transparent opacity={0} depthWrite={false} />
     </mesh>
   );
 }

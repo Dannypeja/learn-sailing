@@ -1,25 +1,31 @@
 @import "tailwindcss";
 
 :root {
-  --navy-deep: #0b1f33;
-  --navy-soft: #14324d;
-  --foam: #f4efe6;
-  --sand: #e4d5b7;
-  --accent: #2ea3c4;
-  --background: var(--navy-deep);
-  --foreground: var(--foam);
+  --studio: #07090c;
+  --panel: #0c1016;
+  --line: #222a35;
+  --text: #e8eaed;
+  --muted: #8b939e;
+  --accent: #67e8f9;
+  --navy-deep: var(--studio);
+  --navy-soft: var(--panel);
+  --foam: var(--text);
+  --sand: var(--muted);
+  --background: var(--studio);
+  --foreground: var(--text);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 }
 
 html,
 body {
-  background: var(--navy-deep);
-  color: var(--foam);
+  background: var(--studio);
+  color: var(--text);
 }
 
 body {
@@ -29,4 +35,56 @@ body {
 button,
 a {
   cursor: pointer;
+}
+
+.hotspot-pin {
+  width: 9px;
+  height: 9px;
+  border: 1px solid rgba(232, 234, 237, 0.45);
+  border-radius: 999px;
+  background: transparent;
+  box-shadow: 0 0 0 4px rgba(7, 9, 12, 0.45);
+}
+
+.hotspot-pin.is-hovered {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+.hotspot-pin.is-selected {
+  width: 11px;
+  height: 11px;
+  border-width: 1.5px;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 5px rgba(103, 232, 249, 0.12);
+}
+
+.hotspot-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 14px;
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.hotspot-label::before {
+  content: "";
+  width: 18px;
+  height: 1px;
+  background: color-mix(in srgb, var(--accent) 70%, transparent);
+}
+
+.orientation-cap {
+  transform: translateY(-14px);
+  color: rgba(232, 234, 237, 0.42);
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
 }
