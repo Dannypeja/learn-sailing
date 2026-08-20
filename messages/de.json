@@ -1,0 +1,133 @@
+{
+  "meta": {
+    "title": "learn-sailing — Bootsteile kennenlernen",
+    "description": "Interaktives 3-D-Segelboot, mit dem du Rumpf, Rigg und Richtungsbegriffe auf Deutsch kennenlernst."
+  },
+  "site": {
+    "name": "learn-sailing",
+    "tagline": "Die Teile eines Segelboots kennenlernen",
+    "github": "Quellcode auf GitHub",
+    "hullType": "Einrumpf · Slup · Einzelfuder"
+  },
+  "locale": {
+    "de": "Deutsch",
+    "en": "English",
+    "switchTo": "Sprache wechseln"
+  },
+  "filters": {
+    "all": "Ganzes Boot",
+    "hull": "Rumpf",
+    "rig": "Rigg",
+    "standing-rig": "Stehendes Gut",
+    "running-rig": "Laufendes Gut",
+    "mast": "Mast",
+    "boom": "Baum",
+    "aft": "Heck"
+  },
+  "search": {
+    "placeholder": "Teil suchen…",
+    "empty": "Kein Teil passt zur Suche."
+  },
+  "detail": {
+    "hint": "Klicke auf einen Punkt am Boot oder wähle ein Teil in der Liste.",
+    "selected": "Ausgewählt"
+  },
+  "viewer": {
+    "reset": "Ansicht zurücksetzen",
+    "loading": "Boot wird geladen…",
+    "orientation": "Richtung"
+  },
+  "attribution": {
+    "model": "3-D-Modell: Kenney (CC0)"
+  },
+  "parts": {
+    "hull": {
+      "name": "Rumpf",
+      "description": "Der Rumpf ist der Schwimmkörper des Bootes. Dieses erste Modell ist ein Einrumpfboot: ein einzelner Rumpf, kein Katamaran."
+    },
+    "keel": {
+      "name": "Kiel",
+      "description": "Der Kiel sitzt unter dem Rumpf. Er gibt dem Boot Seitenhalt im Wasser und wirkt dem Krängen entgegen."
+    },
+    "deck": {
+      "name": "Deck",
+      "description": "Das Deck ist die begehbare Fläche oben auf dem Rumpf. Von hier aus bedienst du Fallen, Schoten und das Ruder."
+    },
+    "cockpit": {
+      "name": "Cockpit",
+      "description": "Im Cockpit sitzt die Crew achtern. Von hier aus wird gesteuert und das laufende Gut bedient."
+    },
+    "rudder": {
+      "name": "Ruder",
+      "description": "Das Ruder sitzt am Heck im Wasser. Dieses Boot hat ein Einzelfuder: ein Ruderblatt, kein Twin-Rudder."
+    },
+    "tiller": {
+      "name": "Pinne",
+      "description": "Die Pinne ist der Hebel, mit dem du das Ruder bewegst. Auf größeren Yachten steht stattdessen oft ein Steuerrad."
+    },
+    "mast": {
+      "name": "Mast",
+      "description": "Der Mast steht senkrecht und trägt Segel sowie stehendes Gut. Bei einer Slup gibt es genau einen Mast."
+    },
+    "spreaders": {
+      "name": "Salinge",
+      "description": "Salinge sind Querstreben am Mast. Sie spreizen die Wanten ab, damit der Mast seitlich besser gestützt wird."
+    },
+    "boom": {
+      "name": "Baum",
+      "description": "Der Baum ist die waagerechte Spiere am Fuß des Großsegels. Er hält die Unterkante des Segels und wird mit der Großschot getrimmt."
+    },
+    "mainsail": {
+      "name": "Großsegel",
+      "description": "Das Großsegel sitzt hinter dem Mast, zwischen Mast und Baum. Es ist das Hauptsegel der Slup."
+    },
+    "jib": {
+      "name": "Fock",
+      "description": "Die Fock ist das Vorsegel vor dem Mast. Sie läuft am Vorstag und wird mit den Fockschoten getrimmt."
+    },
+    "forestay": {
+      "name": "Vorstag",
+      "description": "Das Vorstag ist das Draht- oder Seilstag vom Masttopp zum Bug. Es hält den Mast nach vorn und trägt die Fock."
+    },
+    "backstay": {
+      "name": "Achterstag",
+      "description": "Das Achterstag läuft vom Masttopp zum Heck. Es hält den Mast nach hinten und gehört zum stehenden Gut."
+    },
+    "shrouds": {
+      "name": "Wanten",
+      "description": "Die Wanten stützen den Mast nach Steuerbord und Backbord. Zusammen mit Vor- und Achterstag bilden sie das stehende Gut."
+    },
+    "mainHalyard": {
+      "name": "Großfall",
+      "description": "Mit dem Großfall hissst du das Großsegel am Mast. Fallen gehören zum laufenden Gut: sie werden regelmäßig bedient."
+    },
+    "jibHalyard": {
+      "name": "Fockfall",
+      "description": "Mit dem Fockfall hissst du die Fock. Es läuft zum Masttopp und wird auf dem Vorschiff oder im Cockpit belegt."
+    },
+    "mainsheet": {
+      "name": "Großschot",
+      "description": "Die Großschot trimmt den Baum und damit das Großsegel. Dichtholst du sie, wird das Segel flacher und dichter am Wind."
+    },
+    "jibSheet": {
+      "name": "Fockschot",
+      "description": "Die Fockschoten führen von der Schothorn der Fock nach achtern. Je nach Kurs wird die leewardige Schot dichtgeholt."
+    },
+    "starboard": {
+      "name": "Steuerbord",
+      "description": "Steuerbord ist die rechte Seite, wenn du nach vorn zum Bug blickst. Nachts trägt Steuerbord ein grünes Licht."
+    },
+    "port": {
+      "name": "Backbord",
+      "description": "Backbord ist die linke Seite, wenn du nach vorn zum Bug blickst. Nachts trägt Backbord ein rotes Licht."
+    },
+    "bow": {
+      "name": "Bug",
+      "description": "Der Bug ist das vordere Ende des Bootes. Richtung Bug heißt voraus; hier greifen Vorstag und Anker."
+    },
+    "stern": {
+      "name": "Heck",
+      "description": "Das Heck ist das hintere Ende des Bootes. Richtung Heck heißt achtern; hier sitzen Ruder und oft das Cockpit."
+    }
+  }
+}
