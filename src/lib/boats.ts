@@ -1,7 +1,12 @@
+import {
+  DEFAULT_BOAT_ID,
+  getBoat as getCatalogBoat,
+} from "@content/boats";
+import type { BoatDefinition } from "@content/boats/types";
+
 export {
   DEFAULT_BOAT_ID,
   boats,
-  getBoat,
   partMatchesFilter,
 } from "@content/boats";
 export { FILTER_IDS } from "@content/boats/types";
@@ -13,3 +18,39 @@ export type {
   PartCategory,
   Vec3,
 } from "@content/boats/types";
+
+/** Local Kenney starter mesh. Used when no hosted yacht URL is set, and as a load fallback. */
+export const FALLBACK_BOAT_MODEL = "/models/monohull-sloop-single-rudder.glb";
+
+function envFlag(name: string): boolean | undefined {
+  const raw = process.env[name]?.trim().toLowerCase();
+  if (raw === "1" || raw === "true") {
+    return true;
+  }
+  if (raw === "0" || raw === "false") {
+    return false;
+  }
+  return undefined;
+}
+
+/**
+ * Resolves the runtime boat mesh.
+ *
+ * A ~25 MB yacht GLB is fine on GitHub and Vercel, but it cannot be attached in
+ * Cursor chat. Host it (GitHub Release, public bucket, or `public/models/`) and
+ * point `NEXT_PUBLIC_BOAT_MODEL_URL` at a CORS-enabled HTTPS URL.
+ */
+export function getBoat(id: string = DEFAULT_BOAT_ID): BoatDefinition {
+  const boat = getCatalogBoat(id);
+  const hosted = process.env.NEXT_PUBLIC_BOAT_MODEL_URL?.trim();
+  const model = hosted || boat.model;
+  const preserveMaterials =
+    envFlag("NEXT_PUBLIC_BOAT_PRESERVE_MATERIALS") ??
+    (Boolean(hosted) || Boolean(boat.preserveMaterials));
+
+  return {
+    ...boat,
+    model,
+    preserveMaterials,
+  };
+}

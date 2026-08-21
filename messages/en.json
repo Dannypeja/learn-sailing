@@ -38,7 +38,8 @@
     "orientation": "Direction"
   },
   "attribution": {
-    "model": "Model: Kenney (CC0), gelcoat look"
+    "model": "Model: Kenney (CC0), gelcoat look",
+    "modelHosted": "Model: MesXwi (CC-BY 4.0)"
   },
   "parts": {
     "hull": {

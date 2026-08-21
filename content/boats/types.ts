@@ -49,6 +49,8 @@ export type BoatDefinition = {
   model: string;
   modelScale: number;
   modelRotation: Vec3;
+  /** Keep the GLB's own PBR materials (hosted yacht). Kenney uses a gelcoat override. */
+  preserveMaterials?: boolean;
   defaultCamera: CameraPose;
   parts: BoatPart[];
 };

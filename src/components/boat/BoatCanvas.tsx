@@ -12,15 +12,18 @@ import {
 } from "@react-three/drei";
 import { Canvas, useThree } from "@react-three/fiber";
 import {
+  Component,
   Suspense,
   useEffect,
   useLayoutEffect,
   useMemo,
   useRef,
   useState,
+  type ReactNode,
 } from "react";
 import * as THREE from "three";
 import {
+  FALLBACK_BOAT_MODEL,
   partMatchesFilter,
   type BoatDefinition,
   type BoatPart,
@@ -36,6 +39,7 @@ type CanvasProps = {
   labels: Labels;
   onSelect: (id: string | null) => void;
   resetToken: number;
+  onModelFallback?: () => void;
 };
 
 const ORIENTATION_IDS = new Set(["bow", "stern", "port", "starboard"]);
@@ -49,6 +53,7 @@ const RIG_FILTERS = new Set([
 ]);
 
 export function BoatCanvas(props: CanvasProps) {
+  useGLTF.preload(props.boat.model, true, true);
   return (
     <Canvas
       camera={{
@@ -84,10 +89,17 @@ function BoatScene({
   labels,
   onSelect,
   resetToken,
+  onModelFallback,
 }: CanvasProps) {
   const controls = useRef<CameraControls>(null);
   const selected = boat.parts.find((part) => part.id === selectedId) ?? null;
   const skipResetOnMount = useRef(true);
+  const [useFallback, setUseFallback] = useState(
+    () => boat.model === FALLBACK_BOAT_MODEL,
+  );
+  const modelUrl = useFallback ? FALLBACK_BOAT_MODEL : boat.model;
+  const preserveMaterials =
+    !useFallback && Boolean(boat.preserveMaterials);
 
   useEffect(() => {
     const camera = selected?.camera ?? boat.defaultCamera;
@@ -128,7 +140,24 @@ function BoatScene({
         smoothTime={0.35}
         maxPolarAngle={Math.PI * 0.49}
       />
-      <BoatModel boat={boat} filter={filter} selectedId={selectedId} />
+      <ModelLoadBoundary
+        resetKey={modelUrl}
+        onError={() => {
+          if (modelUrl === FALLBACK_BOAT_MODEL) {
+            return;
+          }
+          setUseFallback(true);
+          onModelFallback?.();
+        }}
+      >
+        <BoatModel
+          url={modelUrl}
+          preserveMaterials={preserveMaterials}
+          boat={boat}
+          filter={filter}
+          selectedId={selectedId}
+        />
+      </ModelLoadBoundary>
       <RigLines parts={boat.parts} filter={filter} selectedId={selectedId} />
       <Hotspots
         parts={boat.parts}
@@ -163,15 +192,19 @@ function BoatScene({
 }
 
 function BoatModel({
+  url,
+  preserveMaterials,
   boat,
   filter,
   selectedId,
 }: {
+  url: string;
+  preserveMaterials: boolean;
   boat: BoatDefinition;
   filter: FilterId;
   selectedId: string | null;
 }) {
-  const { scene } = useGLTF(boat.model);
+  const { scene } = useGLTF(url, true, true);
   const clone = useMemo(() => {
     const next = scene.clone(true);
     next.traverse((child) => {
@@ -179,21 +212,35 @@ function BoatModel({
       if (!mesh.isMesh) {
         return;
       }
-      const isSail = mesh.name.toLowerCase().includes("sail");
-      mesh.material = new THREE.MeshPhysicalMaterial({
-        color: isSail ? "#d5dee6" : "#f2f4f6",
-        metalness: isSail ? 0.06 : 0.16,
-        roughness: isSail ? 0.4 : 0.22,
-        clearcoat: isSail ? 0.08 : 0.82,
-        clearcoatRoughness: 0.2,
-        transparent: true,
-        opacity: isSail ? 0.84 : 1,
-        envMapIntensity: 1.05,
-        side: isSail ? THREE.DoubleSide : THREE.FrontSide,
-      });
+      if (Array.isArray(mesh.material)) {
+        mesh.material = mesh.material.map((material) => material.clone());
+      } else if (mesh.material) {
+        mesh.material = mesh.material.clone();
+      }
+      if (!preserveMaterials) {
+        const isSail = mesh.name.toLowerCase().includes("sail");
+        mesh.material = new THREE.MeshPhysicalMaterial({
+          color: isSail ? "#d5dee6" : "#f2f4f6",
+          metalness: isSail ? 0.06 : 0.16,
+          roughness: isSail ? 0.4 : 0.22,
+          clearcoat: isSail ? 0.08 : 0.82,
+          clearcoatRoughness: 0.2,
+          transparent: true,
+          opacity: isSail ? 0.84 : 1,
+          envMapIntensity: 1.05,
+          side: isSail ? THREE.DoubleSide : THREE.FrontSide,
+        });
+      }
+      const materials = Array.isArray(mesh.material)
+        ? mesh.material
+        : [mesh.material];
+      for (const material of materials) {
+        material.userData.baseOpacity = material.opacity;
+        material.userData.baseTransparent = material.transparent;
+      }
     });
     return next;
-  }, [scene]);
+  }, [preserveMaterials, scene]);
 
   const selectedPart = boat.parts.find((part) => part.id === selectedId) ?? null;
 
@@ -218,8 +265,14 @@ function BoatModel({
         if (!("opacity" in std)) {
           continue;
         }
-        std.transparent = true;
-        std.opacity = dimmed ? 0.16 : isSail ? 0.84 : 1;
+        std.transparent = dimmed || Boolean(std.userData.baseTransparent);
+        std.opacity = dimmed
+          ? 0.16
+          : typeof std.userData.baseOpacity === "number"
+            ? std.userData.baseOpacity
+            : isSail
+              ? 0.84
+              : 1;
         if ("emissive" in std) {
           std.emissive = new THREE.Color(highlighted ? "#1b6f7c" : "#000000");
           std.emissiveIntensity = highlighted ? 0.18 : 0;
@@ -354,4 +407,42 @@ function HotspotCollider({
   );
 }
 
-useGLTF.preload("/models/monohull-sloop-single-rudder.glb");
+function ModelLoadBoundary({
+  resetKey,
+  onError,
+  children,
+}: {
+  resetKey: string;
+  onError: () => void;
+  children: ReactNode;
+}) {
+  return (
+    <ModelLoadBoundaryInner key={resetKey} onError={onError}>
+      {children}
+    </ModelLoadBoundaryInner>
+  );
+}
+
+class ModelLoadBoundaryInner extends Component<
+  { onError: () => void; children: ReactNode },
+  { failed: boolean }
+> {
+  state = { failed: false };
+
+  static getDerivedStateFromError(): { failed: boolean } {
+    return { failed: true };
+  }
+
+  componentDidCatch(): void {
+    this.props.onError();
+  }
+
+  render(): ReactNode {
+    if (this.state.failed) {
+      return null;
+    }
+    return this.props.children;
+  }
+}
+
+useGLTF.preload(FALLBACK_BOAT_MODEL, true, true);

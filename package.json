@@ -8,7 +8,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "inspect-glb": "node scripts/inspect-glb.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.8",

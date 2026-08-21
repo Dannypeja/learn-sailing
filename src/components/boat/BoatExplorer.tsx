@@ -28,6 +28,7 @@ export function BoatExplorer({ boat }: Props) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [resetToken, setResetToken] = useState(0);
+  const [usingFallbackModel, setUsingFallbackModel] = useState(false);
 
   const selectedPart = boat.parts.find((part) => part.id === selectedId) ?? null;
 
@@ -66,6 +67,7 @@ export function BoatExplorer({ boat }: Props) {
               labels={labels}
               onSelect={setSelectedId}
               resetToken={resetToken}
+              onModelFallback={() => setUsingFallbackModel(true)}
             />
           </div>
           <div className="absolute top-3 right-3 flex flex-col items-end gap-2">
@@ -80,7 +82,11 @@ export function BoatExplorer({ boat }: Props) {
               {t("viewer.reset")}
             </button>
             <p className="font-mono text-[9px] tracking-[0.12em] text-[var(--muted)] uppercase">
-              {t("attribution.model")}
+              {t(
+                boat.preserveMaterials && !usingFallbackModel
+                  ? "attribution.modelHosted"
+                  : "attribution.model",
+              )}
             </p>
           </div>
           <PartDetail part={selectedPart} />

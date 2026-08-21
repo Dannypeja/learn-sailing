@@ -20,7 +20,9 @@ npm run build
 
 ## Deploy on Vercel
 
-This is a standard Next.js App Router app. Import [github.com/Dannypeja/learn-sailing](https://github.com/Dannypeja/learn-sailing) in Vercel; no environment variables are required for phase 1.
+This is a standard Next.js App Router app. Import [github.com/Dannypeja/learn-sailing](https://github.com/Dannypeja/learn-sailing) in Vercel. Phase 1 runs with no environment variables (Kenney starter mesh).
+
+To load a hosted yacht GLB instead, set `NEXT_PUBLIC_BOAT_MODEL_URL` to a public HTTPS URL that sends CORS headers (GitHub Release assets do). See `.env.example`.
 
 ## Project layout
 
@@ -63,6 +65,13 @@ The registry is built for more than one boat. Phase 1 only registers a **monohul
 ## 3D model
 
 The starter visual is Kenney’s CC0 `boat-sail-a` from the [Watercraft Kit](https://kenney.nl/assets/watercraft-kit). Educational interaction (hotspots, labels, extra stay/sheet lines) lives in the sidecar catalog, so the GLB can be swapped without rewriting the app.
+
+A more detailed Omega-type dinghy ([Yacht by MesXwi](https://sketchfab.com/3d-models/yacht-ae42c1609c25412cbfe40baf9728d987), CC-BY 4.0) is intended next. That GLB is about 25 MB:
+
+- Cursor chat attachments cap at 25 MB. GitHub does not: files under 100 MB can live in `public/models/` and be committed.
+- Or host the GLB (GitHub Release is enough) and set `NEXT_PUBLIC_BOAT_MODEL_URL`. Do not proxy it through a Next.js route. The viewer loads the URL in the browser; the host must allow CORS.
+- Sketchfab’s glTF zip is ~7 MB if you want to attach that instead of the GLB.
+- `npm run inspect-glb -- <path-or-url>` prints mesh names and bounds for hotspot remapping.
 
 ## License
 
