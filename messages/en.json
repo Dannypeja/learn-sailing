@@ -9,6 +9,10 @@
     "github": "Source on GitHub",
     "hullType": "Monohull · sloop · single rudder"
   },
+  "nav": {
+    "parts": "Boat parts",
+    "sail": "Sailing"
+  },
   "locale": {
     "de": "Deutsch",
     "en": "English",
@@ -128,6 +132,71 @@
     "stern": {
       "name": "Stern",
       "description": "The stern is the aft end of the boat. Toward the stern is aft; the rudder and often the cockpit sit here."
+    }
+  },
+  "sail": {
+    "meta": {
+      "title": "learn-sailing — Sailing simulation",
+      "description": "Turn the wind and the boat, trim the sails, and see how course and heel go together."
+    },
+    "tagline": "Learn courses, sail trim, and heel",
+    "panelTitle": "Sailing simulation",
+    "panelHint": "The boat stays put. You rotate wind and heading and trim the sheets.",
+    "loading": "Loading simulation…",
+    "wind": "Wind",
+    "attribution": "Teaching sloop, custom low-poly rig",
+    "view": {
+      "perspective": "3D",
+      "top": "Top-down"
+    },
+    "compass": {
+      "n": "N",
+      "e": "E",
+      "s": "S",
+      "w": "W"
+    },
+    "instruments": {
+      "twa": "Wind angle",
+      "course": "Point of sail",
+      "heel": "Heel",
+      "drive": "Sail power",
+      "upright": "upright"
+    },
+    "points": {
+      "in-irons": "In irons",
+      "close-hauled": "Close-hauled",
+      "beam-reach": "Beam reach",
+      "broad-reach": "Broad reach",
+      "run": "Run"
+    },
+    "tacks": {
+      "starboard": "starboard",
+      "port": "port",
+      "none": "amidships"
+    },
+    "courses": {
+      "title": "Points of sail",
+      "hold": "Hold course",
+      "holdHint": "Turn the wind and the boat holds the selected point of sail. Sheets stay fine-tunable.",
+      "close-hauled-starboard": "Close-hauled · Stb",
+      "close-hauled-port": "Close-hauled · Port",
+      "beam-reach-starboard": "Beam reach · Stb",
+      "beam-reach-port": "Beam reach · Port",
+      "broad-reach-starboard": "Broad reach · Stb",
+      "broad-reach-port": "Broad reach · Port",
+      "run-starboard": "Run · Stb",
+      "run-port": "Run · Port"
+    },
+    "controls": {
+      "wind": "Wind direction (from)",
+      "heading": "Boat heading",
+      "windSpeed": "Wind speed",
+      "mainSheet": "Mainsheet",
+      "jibSheet": "Jib sheet",
+      "sheeted": "sheeted in",
+      "eased": "eased",
+      "sheetPct": "{value}% eased",
+      "knots": "{value} kn"
     }
   }
 }

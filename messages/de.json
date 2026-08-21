@@ -9,6 +9,10 @@
     "github": "Quellcode auf GitHub",
     "hullType": "Einrumpf · Slup · Einzelfuder"
   },
+  "nav": {
+    "parts": "Bootsteile",
+    "sail": "Segeln"
+  },
   "locale": {
     "de": "Deutsch",
     "en": "English",
@@ -128,6 +132,71 @@
     "stern": {
       "name": "Heck",
       "description": "Das Heck ist das hintere Ende des Bootes. Richtung Heck heißt achtern; hier sitzen Ruder und oft das Cockpit."
+    }
+  },
+  "sail": {
+    "meta": {
+      "title": "learn-sailing — Segelsimulation",
+      "description": "Dreh Wind und Boot, trimme die Segel und sieh, wie Kurs und Krängung zusammenhängen."
+    },
+    "tagline": "Kurse, Segelstellung und Krängung verstehen",
+    "panelTitle": "Segelsimulation",
+    "panelHint": "Das Boot bleibt am Ort. Du drehst Wind und Kurs und trimmst die Schoten.",
+    "loading": "Simulation wird geladen…",
+    "wind": "Wind",
+    "attribution": "Lehr-Slup, eigenes Low-Poly-Rigg",
+    "view": {
+      "perspective": "3-D",
+      "top": "Draufsicht"
+    },
+    "compass": {
+      "n": "N",
+      "e": "O",
+      "s": "S",
+      "w": "W"
+    },
+    "instruments": {
+      "twa": "Windwinkel",
+      "course": "Kurs zum Wind",
+      "heel": "Krängung",
+      "drive": "Segelwirkung",
+      "upright": "aufrecht"
+    },
+    "points": {
+      "in-irons": "Im Windloch",
+      "close-hauled": "Am Wind",
+      "beam-reach": "Halber Wind",
+      "broad-reach": "Raumschots",
+      "run": "Vor dem Wind"
+    },
+    "tacks": {
+      "starboard": "Steuerbord",
+      "port": "Backbord",
+      "none": "mittschiffs"
+    },
+    "courses": {
+      "title": "Punkte des Windes",
+      "hold": "Kurs halten",
+      "holdHint": "Wind drehen: das Boot stellt sich auf den gewählten Kurs ein. Schoten bleiben fein justierbar.",
+      "close-hauled-starboard": "Am Wind · Stb",
+      "close-hauled-port": "Am Wind · Bb",
+      "beam-reach-starboard": "Halber Wind · Stb",
+      "beam-reach-port": "Halber Wind · Bb",
+      "broad-reach-starboard": "Raumschots · Stb",
+      "broad-reach-port": "Raumschots · Bb",
+      "run-starboard": "Vor dem Wind · Stb",
+      "run-port": "Vor dem Wind · Bb"
+    },
+    "controls": {
+      "wind": "Windrichtung (woher)",
+      "heading": "Bootskurs",
+      "windSpeed": "Windstärke",
+      "mainSheet": "Großschot",
+      "jibSheet": "Fockschot",
+      "sheeted": "dicht",
+      "eased": "geviert",
+      "sheetPct": "{value} % gefiert",
+      "knots": "{value} kn"
     }
   }
 }
