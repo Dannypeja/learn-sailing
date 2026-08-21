@@ -66,12 +66,15 @@ The registry is built for more than one boat. Phase 1 only registers a **monohul
 
 The starter visual is Kenney’s CC0 `boat-sail-a` from the [Watercraft Kit](https://kenney.nl/assets/watercraft-kit). Educational interaction (hotspots, labels, extra stay/sheet lines) lives in the sidecar catalog, so the GLB can be swapped without rewriting the app.
 
-A more detailed Omega-type dinghy ([Yacht by MesXwi](https://sketchfab.com/3d-models/yacht-ae42c1609c25412cbfe40baf9728d987), CC-BY 4.0) is intended next. That GLB is about 25 MB:
+A more detailed Omega-type dinghy ([Yacht by MesXwi](https://sketchfab.com/3d-models/yacht-ae42c1609c25412cbfe40baf9728d987), CC-BY 4.0) is intended next. That GLB is about 25 MB, which hits **two** 25 MB caps: Cursor chat and GitHub’s **website “Add file”** upload ([docs](https://docs.github.com/en/repositories/working-with-files/managing-files/adding-a-file-to-a-repository)).
 
-- Cursor chat attachments cap at 25 MB. GitHub does not: files under 100 MB can live in `public/models/` and be committed.
-- Or host the GLB (GitHub Release is enough) and set `NEXT_PUBLIC_BOAT_MODEL_URL`. Do not proxy it through a Next.js route. The viewer loads the URL in the browser; the host must allow CORS.
-- Sketchfab’s glTF zip is ~7 MB if you want to attach that instead of the GLB.
-- `npm run inspect-glb -- <path-or-url>` prints mesh names and bounds for hotspot remapping.
+Do **not** use Add file for the GLB. Use one of these:
+
+1. **Sketchfab glTF zip (~7 MB)** — fits GitHub Add file and Cursor chat. Prefer this if you only have a browser.
+2. **GitHub Release** — Releases → Draft a new release → attach the GLB (up to 2 GB). Then set `NEXT_PUBLIC_BOAT_MODEL_URL` to the asset URL. Release assets send CORS headers.
+3. **`git push` from a local clone** — repository files may be up to 100 MB via the command line (warning at 50 MB). Still skip the website upload.
+
+Do not proxy the file through a Next.js route. `npm run inspect-glb -- <path-or-url>` prints mesh names and bounds for hotspot remapping.
 
 ## License
 

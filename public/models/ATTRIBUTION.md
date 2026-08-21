@@ -20,4 +20,4 @@ Intended asset:
 - License: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 - Credit required by the author
 
-Host the downloadable GLB or glTF (not Sketchfab’s viewer `binz`) on a CORS-enabled public URL, or commit it under `public/models/` (25 MB is within GitHub’s limit). Do not check in paid or non-downloadable Sketchfab meshes.
+Host the downloadable GLB or glTF (not Sketchfab’s viewer `binz`) as a **GitHub Release** asset, or use Sketchfab’s ~7 MB glTF zip (that one fits GitHub’s 25 MB website upload). Do not use the repo “Add file” button for the ~25 MB GLB. Command-line `git push` allows up to 100 MB per file; Releases allow up to 2 GB. Do not check in paid or non-downloadable Sketchfab meshes.

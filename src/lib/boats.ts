@@ -36,9 +36,10 @@ function envFlag(name: string): boolean | undefined {
 /**
  * Resolves the runtime boat mesh.
  *
- * A ~25 MB yacht GLB is fine on GitHub and Vercel, but it cannot be attached in
- * Cursor chat. Host it (GitHub Release, public bucket, or `public/models/`) and
- * point `NEXT_PUBLIC_BOAT_MODEL_URL` at a CORS-enabled HTTPS URL.
+ * A ~25 MB yacht GLB cannot go through Cursor chat or GitHub's website
+ * "Add file" (both 25 MB). Host it as a GitHub Release asset (or any
+ * CORS-enabled HTTPS URL) and set NEXT_PUBLIC_BOAT_MODEL_URL. Sketchfab's
+ * glTF zip is ~7 MB and does fit those uploads.
  */
 export function getBoat(id: string = DEFAULT_BOAT_ID): BoatDefinition {
   const boat = getCatalogBoat(id);
